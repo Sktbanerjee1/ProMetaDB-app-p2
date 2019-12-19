@@ -25,12 +25,10 @@ from src import config
 
 
 # blueprint routes
-from src.annoation_dashboard.routes import annotation_dashboard
-from src.database_dashboard.routes import database_dashboard
 from src.main.routes import main
+from src.users.routes import users
 
 # register blueprint
-app.register_blueprint(annoation_dashboard)
-app.register_blueprint(database_dashboard)
 app.register_blueprint(main)
+app.register_blueprint(users)
 

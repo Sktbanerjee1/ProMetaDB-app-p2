@@ -17,6 +17,7 @@ matplotlib = "*"
 python-secrets = "*"
 pillow = "*"
 flask-api = "*"
+pyjwt = "*"
 
 [requires]
 python_version = "3.6"

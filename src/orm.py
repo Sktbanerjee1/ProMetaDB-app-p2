@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 from src import db
+from datetime import datetime
 
 # user
 class User(db.Model):
@@ -10,15 +12,26 @@ class User(db.Model):
     is_curator = db.Column(db.Boolean)
     is_validator = db.Column(db.Boolean)
     is_admin = db.Column(db.Boolean)
+    upgrade_rquests =  db.relationship('UpgradeRequest', backref='user', lazy=True)
+
+    def __repr__(self):
+        return f"User('{self.public_id}', '{self.username}', '{self.email}')"
 
 
-class Task(db.Model):
+# upgrade request
+
+class UpgradeRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    creation_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    lastmod_timestamp = db.Column(db.DateTime, nullable=True)
-    complete_timestamp = db.Column(db.DateTime, nullable=True)
-    is_complete = db.Column(db.Boolean)
-    is_validated = db.Column(db.Boolean)
+    request_id = db.Column(db.String(10), unique=True)
+    request_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    request_type = db.Column(db.String(20), unique=False, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    is_accepted = db.Column(db.Boolean)
+    is_denied = db.Column(db.Boolean)
+    under_processing = db.Column(db.Boolean)
+
+    def __repr__(self):
+        return f"UpgradeRequest('{self.request_id}', {self.request_timestamp}, '{self.request_type}')"
 
 
 
